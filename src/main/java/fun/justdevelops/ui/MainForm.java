@@ -87,6 +87,7 @@ public class MainForm extends JFrame {
         };
         inCategoriesTableModel.setColumnIdentifiers(new String[]{"id", "Категория", "Бюджет", "Доход"});
         inCategoriesTable.setModel(inCategoriesTableModel);
+        inCategoriesTable.removeColumn(inCategoriesTable.getColumnModel().getColumn(0));
         outCategoriesTableModel = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -95,6 +96,7 @@ public class MainForm extends JFrame {
         };
         outCategoriesTableModel.setColumnIdentifiers(new String[]{"id", "Категория", "Бюджет", "Потрачено"});
         outCategoriesTable.setModel(outCategoriesTableModel);
+        outCategoriesTable.removeColumn(outCategoriesTable.getColumnModel().getColumn(0));
     }
 
     private void initListeners(
@@ -128,7 +130,7 @@ public class MainForm extends JFrame {
                 Point point = mouseEvent.getPoint();
                 int row = table.rowAtPoint(point);
                 if (mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1 && row != -1) {
-                    long id = Long.parseLong(String.valueOf(table.getValueAt(row, 0)));
+                    long id = Long.parseLong(String.valueOf(table.getModel().getValueAt(row, 0)));
                     onEditInCategoryClickListener.click(id);
                 }
             }
@@ -139,7 +141,7 @@ public class MainForm extends JFrame {
                 Point point = mouseEvent.getPoint();
                 int row = table.rowAtPoint(point);
                 if (mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1 && row != -1) {
-                    long id = Long.parseLong(String.valueOf(table.getValueAt(row, 0)));
+                    long id = Long.parseLong(String.valueOf(table.getModel().getValueAt(row, 0)));
                     onEditOutCategoryClickListener.click(id);
                 }
             }
