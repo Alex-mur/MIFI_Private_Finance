@@ -9,8 +9,6 @@ import fun.justdevelops.ui.listeners.OnSaveCategoryClickListener;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class CategoryForm extends JFrame {
     private JPanel mainPanel;
@@ -33,7 +31,7 @@ public class CategoryForm extends JFrame {
             String budget,
             OnSaveCategoryClickListener onSaveCategoryClickListener,
             OnCancelSavingCategoryClickListener onCancelSavingCategoryClickListener) {
-        setTitle("Новая транзакция");
+        setTitle("Редактирование категории");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setMinimumSize(new Dimension(400, 300));
         pack();
@@ -47,6 +45,7 @@ public class CategoryForm extends JFrame {
     private void initFields(long id, String name, View.TRANSACTION_TYPE type, String budget) {
         this.id = id;
         this.type = type;
+        nameInput.setText(name);
         if (type == View.TRANSACTION_TYPE.IN) {
             typeValue.setText("Доход");
         } else typeValue.setText("Расход");

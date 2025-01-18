@@ -11,6 +11,8 @@ import javax.swing.plaf.FontUIResource;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.StyleContext;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.Locale;
 
@@ -83,7 +85,7 @@ public class MainForm extends JFrame {
                 return false;
             }
         };
-        inCategoriesTableModel.setColumnIdentifiers(new String[]{"Категория", "Бюджет", "Доход"});
+        inCategoriesTableModel.setColumnIdentifiers(new String[]{"id", "Категория", "Бюджет", "Доход"});
         inCategoriesTable.setModel(inCategoriesTableModel);
         outCategoriesTableModel = new DefaultTableModel() {
             @Override
@@ -91,7 +93,7 @@ public class MainForm extends JFrame {
                 return false;
             }
         };
-        outCategoriesTableModel.setColumnIdentifiers(new String[]{"Категория", "Бюджет", "Потрачено"});
+        outCategoriesTableModel.setColumnIdentifiers(new String[]{"id", "Категория", "Бюджет", "Потрачено"});
         outCategoriesTable.setModel(outCategoriesTableModel);
     }
 
@@ -119,6 +121,28 @@ public class MainForm extends JFrame {
         });
         addOutCategoryButton.addActionListener(e -> {
             onEditOutCategoryClickListener.click(0);
+        });
+        inCategoriesTable.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent mouseEvent) {
+                JTable table = (JTable) mouseEvent.getSource();
+                Point point = mouseEvent.getPoint();
+                int row = table.rowAtPoint(point);
+                if (mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1 && row != -1) {
+                    long id = Long.parseLong(String.valueOf(table.getValueAt(row, 0)));
+                    onEditInCategoryClickListener.click(id);
+                }
+            }
+        });
+        outCategoriesTable.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent mouseEvent) {
+                JTable table = (JTable) mouseEvent.getSource();
+                Point point = mouseEvent.getPoint();
+                int row = table.rowAtPoint(point);
+                if (mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1 && row != -1) {
+                    long id = Long.parseLong(String.valueOf(table.getValueAt(row, 0)));
+                    onEditOutCategoryClickListener.click(id);
+                }
+            }
         });
     }
 

@@ -279,6 +279,7 @@ public class FinanceController implements Controller {
         ArrayList<String[]> rows = new ArrayList<>();
         categories.stream().filter(category -> category.getType() == Category.TYPE.IN).forEach(category -> {
         rows.add(new String[] {
+            Long.toString(category.getId()),
             category.getName(),
             Double.toString(category.getBudget()),
             Double.toString(getCategoryTransactionsSum(category.getId(), transactions))});
@@ -291,9 +292,10 @@ public class FinanceController implements Controller {
         ArrayList<String[]> rows = new ArrayList<>();
         categories.stream().filter(category -> category.getType() == Category.TYPE.OUT).forEach(category -> {
             rows.add(new String[] {
-                    category.getName(),
-                    Double.toString(category.getBudget()),
-                    Double.toString(getCategoryTransactionsSum(category.getId(), transactions))});
+                Long.toString(category.getId()),
+                category.getName(),
+                Double.toString(category.getBudget()),
+                Double.toString(getCategoryTransactionsSum(category.getId(), transactions))});
         });
         view.updateOutCategoriesTable(rows);
     }
